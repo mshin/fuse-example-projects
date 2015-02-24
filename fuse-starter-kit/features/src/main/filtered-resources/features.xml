@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+    
+    <!-- LOAD THIS FIRST --> 
+    <feature name="fsk-commons">   
+        <feature version="${camel-version}">camel-core</feature>
+        <feature version="${cxf-version}">cxf</feature>
+        <feature version="${camel-version}">camel-cxf</feature>                
+        <feature version="${spring-version}">spring</feature>
+        <feature>spring-dm</feature>
+        <feature>camel-spring-ws</feature>
+        <feature>spring-jdbc</feature>
+        <feature>camel-sql</feature>
+        <feature version="${karaf-version}">war</feature>
+        <bundle>mvn:org.springframework.osgi/spring-osgi-web/${spring-osgi-version}</bundle>
+    	<bundle>mvn:org.springframework/spring-web/${spring-version}</bundle>
+    	<bundle>mvn:org.springframework/spring-webmvc/${spring-version}</bundle>
+    	<bundle>mvn:javax.servlet/com.springsource.javax.servlet.jsp.jstl/${spring-jstl-version}</bundle>
+    	
+    	<bundle>wrap:mvn:org.springframework.ldap/spring-ldap-core/${spring-ldap-version}</bundle>
+    	<bundle>mvn:commons-dbcp/commons-dbcp/${commons-dbcp-version}</bundle>
+    	<bundle>wrap:mvn:org.postgresql/postgresql/${postgres-version}</bundle>
+
+    </feature>
+    
+    <feature name="fsk">  
+    	<feature>fsk-commons</feature> 
+    	<bundle>mvn:${project.groupId}/artifacts/${project.version}</bundle>
+    	<bundle>mvn:${project.groupId}/backend-ws-app/${project.version}</bundle>
+    	<bundle>mvn:${project.groupId}/fsk-esb/${project.version}</bundle>
+        <!--<bundle>mvn:${project.groupId}/springmvc-ui/${project.version}/war</bundle> -->
+    </feature>   
+        
+</features>

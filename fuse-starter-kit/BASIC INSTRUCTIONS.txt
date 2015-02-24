@@ -1,0 +1,37 @@
+FUSE STARTER KIT BASIC INSTRUCTIONS
+
+1. Set up DB
+Download and install postgresql database. The one used to create this starter kit was version 9.3.3.0 (21).
+Download and install pgadmin. The one used to create this starter kit was pgAdmin3 version 1.18.1.
+
+Start postgresql.
+Open pgadmin.
+Whichever user installed postgresql, use that user to set up a postgres server.
+
+name: whatever you want.
+host:localhost
+port:5432
+Service: leave blank
+maintenanceDB:postgres
+username: the user that installed postgresql
+password: create a password and store it, probably "postgres"
+Group: Servers
+
+Create a Login Role. One should be the user used to create the server connection. If the user to create the server connection was not "postgres", create that user. Right click on "Login Roles" and select "New Login Role...".
+Under "Properties" tab "Role name" field, put "postgres". Under "Definition" tab "Password" fields, put the password. Use "postgres" to keep things simple. Click "OK".
+
+You should see one or two databases under your server definition, one named the user used to create the server connection, one named "postgres". Click on the "postgres" db. Click on the "SQL" button in the menu to execute arbitrary SQL queries. A new editor should pop up. Click on "Open". Open the db.sql file located in artifacts/src/main/resources/sql/db.sql in the fuse starter kit sourcecode. You should see this file's contents opened in the SQL editor. Press the "f5" key to execute the query. The query creates the table and verifies that user postgres has permissions to access the table as defined in the datasource located in database-setup.xml of the fsk-esb module.
+
+Go back to the database browser. Select the "postgres" db and click on the "refresh" button from the menu (or f5). Click on postgres-schemas-public-Tables. You should have successfully created table "dbtable". Right click on "dbtable" and select ViewData>View All Rows to see a visual representation of the table you created.
+
+2. Build project in maven
+With the console/command line browse to the top level pom, fsk-root pom.xml. Type in the command "mvn clean install -e -DskipTests". You must skip tests because one of the tests in the example fails.
+
+3. Start Fuse
+Run bin/karaf.bat (windows) or karaf.sh (unix based). When the Karaf console comes up, type in "features:addUrl mvn:kit.starter.fuse/features/1.0-SNAPSHOT/xml/features". Hit enter. Next type in "features:install fsk". Hit enter. Once the bundles have refreshed, open up another console to monitor the logs located at data/log/fuse.log. (tail -f pathToFuse.log)
+
+*Run the application
+
+In the browser navigate to http://localhost:8181/fuseSK/example for the web UI. Also navigate to http://localhost:8181/cxf to see the two exposed services. From the application, select a number and click on submit. Check the output and the logs. The camel route has hit the DB and the exposed backend webservice.
+
+

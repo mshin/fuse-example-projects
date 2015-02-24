@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:broker="http://activemq.apache.org/schema/core"
+	xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd
+   	http://camel.apache.org/schema/spring
+	http://camel.apache.org/schema/spring/camel-spring.xsd
+	http://activemq.apache.org/schema/core 
+    http://activemq.apache.org/schema/core/activemq-core.xsd
+    http://www.springframework.org/schema/osgi-compendium
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+
+    
+    <!-- Pooled Database Configuration -->
+    
+   	<!-- MySql DataSource Setup -->
+  	<!-- bean id="mysql-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+    	<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+    	<property name="url" value="jdbc:mysql://localhost:3306/mysqldatabase?relaxAutoCommit=true" />
+    	<property name="username" value="user" />
+    	<property name="password" value="password" />
+    	<property name="poolPreparedStatements" value="true" />
+  	</bean -->
+   
+  	<!-- Pooled Oracle DataSource Setup -->
+  	<!-- bean id="oracle-ds" class="com.cvs.esignature.db.BasicDataSource" init-method="createDataSource" destroy-method="close"> 
+    	<property name="driverClassName" value="${oracle.oltp.driverClassName}"/>
+    	<property name="url" value="${oracle.oltp.url}"/>
+    	<property name="username" value="${oracle.oltp.username}"/>
+    	<property name="password" value="${oracle.oltp.password}"/>
+    	<property name="poolPreparedStatements" value="${oracle.oltp.poolPreparedStatements}"/>
+    	<property name="accessToUnderlyingConnectionAllowed" value="true"/>
+    	<property name="initialSize" value="5"/>
+    	<property name="maxWait" value="1000"/>
+    	<property name="maxIdle" value="5"/>
+    	<property name="maxActive" value="20"/>
+  	</bean-->
+  	
+  	
+  	  	
+  	<!-- org.postgresql.ds.PGSimpleDataSource -->
+  	<!-- Postgres DataSource Setup --> 
+        <bean id="postgres-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/postgres" />
+        <property name="username" value="postgres" />
+        <property name="password" value="postgres" />
+        <property name="poolPreparedStatements" value="true" />
+    </bean>	  
+       
+</beans>

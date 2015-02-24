@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd
+   	http://camel.apache.org/schema/spring
+	http://camel.apache.org/schema/spring/camel-spring.xsd
+    http://www.springframework.org/schema/osgi-compendium
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+	
+<!-- 	<bean id="postgres-ds" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="org.postgresql.Driver" />
+        <property name="url" value="jdbc:postgresql://localhost:5432/postgres" />
+        <property name="username" value="postgres" />
+        <property name="password" value="postgres" />
+        <property name="poolPreparedStatements" value="true" /> -->
+         
+	<!-- Remove this endpoint if using the ExposedCamelServiceImpl implementation. -->
+<!-- 	<cxf:cxfEndpoint id="exposedCamelServiceEndpoint"
+		address="/ExposedCamelService"
+		wsdlURL="wsdl/exposed_camel_webservice.wsdl"
+		serviceClass="kit.starter.fuse.exposed_camel_service_1_0.ExposedCamelService"
+		endpointName="e:ExposedCamelServicePort"
+		serviceName="s:ExposedServiceToUseCamelRoutes"
+		xmlns:e="http://exposed_camel_service_1_0.fuse.starter.kit/"
+		xmlns:s="http://exposed_camel_service_1_0.fuse.starter.kit/" /> -->
+
+<!-- 	<cxf:cxfEndpoint id="backendWebserviceClientEndpoint"
+        serviceClass="kit.starter.fuse.backend_service_1_0.BackendService"
+        address="http://localhost:8181/cxf/BackendService" /> -->
+            
+	<camelContext lazyLoadTypeConverters="true" id="camelContext" xmlns="http://camel.apache.org/schema/spring">
+		<routeBuilder ref="fuseStarterKitRouteBuilder" />
+	</camelContext>
+	
+	<bean id="fuseStarterKitRouteBuilder" class="kit.starter.fuse.route.FuseStarterKitRouteBuilder">
+		<property name="routeSourceEndpoint" value="cxf:bean:exposedCamelServiceEndpoint"/>
+		<property name="dataSourceBeanId" value="postgres-ds"/>		
+	</bean>
+</beans>

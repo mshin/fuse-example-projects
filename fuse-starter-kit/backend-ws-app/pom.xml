@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>kit.starter.fuse</groupId>
+    <artifactId>fsk-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>backend-ws-app</artifactId>
+  <packaging>bundle</packaging>
+  <name>backend-ws-app</name>
+  
+  <properties>
+  </properties>
+  
+  <dependencies>
+  
+    <!-- Application dependencies -->
+  <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>artifacts</artifactId>
+      <version>${project.version}</version>
+    </dependency> 
+
+          
+    <!-- Module dependencies -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit-version}</version>
+      <scope>provided</scope>
+    </dependency> 
+
+
+    <!-- CXF -->
+    
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-bundle</artifactId>
+        <version>2.6.0.redhat-60024</version>
+	</dependency>
+	
+
+    <!-- SLF4J -->
+    
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j-version}</version>
+    </dependency>
+    
+
+    <!-- Spring -->
+    
+    <dependency> 
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.ws</groupId>
+        <artifactId>spring-ws-core</artifactId>
+        <version>2.0.0-M1</version>
+    </dependency>  
+         
+  </dependencies>
+
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <plugins>
+      <plugin>	
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${maven-bundle-plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Import-Package>
+            	*,
+                javax.jws,
+                javax.wsdl,
+                javax.xml.bind,
+                javax.xml.bind.annotation,
+                javax.xml.namespace,
+                javax.xml.transform,
+                javax.xml.ws,
+                META-INF.cxf,
+                org.apache.cxf.bus,
+                org.apache.cxf.bus.spring,
+                org.apache.cxf.bus.resource,
+                org.apache.cxf.configuration.spring,
+                org.apache.cxf.resource,
+            	org.springframework.jms.connection, 
+            	org.springframework.transaction.support,
+                org.springframework.beans.factory.config,
+                org.springframework.context.support,
+                org.slf4j,
+        	</Import-Package>
+        	<Export-Package>
+				kit.starter.fuse.backend_service_1_0
+        	</Export-Package>
+        	<Require-Bundle>org.apache.cxf.bundle</Require-Bundle>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

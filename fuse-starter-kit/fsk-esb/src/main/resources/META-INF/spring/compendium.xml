@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+    http://www.springframework.org/schema/osgi-compendium
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+    
+<!-- 	<osgix:cm-properties id="fskproperties.cfg.with.defaults" persistent-id="fskproperties">
+		<prop key="address">/fuseStarterKit</prop>
+		<prop key="routeSourceEndpoint">direct:something</prop>
+		<prop key="securityManagerLocation">http://fuse.starter.kit/webservice_something_1_0</prop>		
+		<prop key="oracle.oltp.driverClassName">oracle.jdbc.driver.OracleDriver</prop>
+		<prop key="oracle.oltp.url">jdbc:oracle:thin:@changeme:1521:database-name-changeme</prop>
+		<prop key="oracle.oltp.username">changeme</prop>
+		<prop key="oracle.oltp.password">changeme</prop>
+		<prop key="oracle.oltp.poolPreparedStatements">true</prop>
+		<prop key="ad-ldap-url">ldap://your.ldap.url:389</prop>
+		<prop key="ad-ldap-base"></prop>
+		<prop key="ad-ldap-userName">changeme</prop>
+		<prop key="ad-ldap-password">changeme</prop>
+	</osgix:cm-properties> -->
+
+	<!-- placeholder configurer -->
+	<!-- <ctx:property-placeholder properties-ref="fskproperties.cfg.with.defaults" /> -->
+	
+</beans>

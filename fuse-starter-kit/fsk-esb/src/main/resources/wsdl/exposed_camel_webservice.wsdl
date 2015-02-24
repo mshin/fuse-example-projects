@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements. See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership. The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied. See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+<wsdl:definitions name="ExposedServiceToUseCamelRoutes" 
+                  targetNamespace="http://exposed_camel_service_1_0.fuse.starter.kit/" 
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:tns="http://exposed_camel_service_1_0.fuse.starter.kit/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema attributeFormDefault="unqualified" 
+                    elementFormDefault="unqualified" 
+                    targetNamespace="http://exposed_camel_service_1_0.fuse.starter.kit/" 
+                    xmlns:tns="http://exposed_camel_service_1_0.fuse.starter.kit/" 
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="exposedCamelServiceRequest" type="tns:exposedCamelServiceRequest" />
+            <xsd:complexType name="exposedCamelServiceRequest">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="selectedValue" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="exposedCamelServiceResponse" type="tns:exposedCamelServiceResponse" />
+            <xsd:complexType name="exposedCamelServiceResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="yourValue" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="fromLDAP" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="fromDB" type="xsd:string" />
+                    <xsd:element minOccurs="0" name="fromWS" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="exposedCamelServiceResponse">
+        <wsdl:part element="tns:exposedCamelServiceResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="exposedCamelServiceRequest">
+        <wsdl:part element="tns:exposedCamelServiceRequest" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="ExposedCamelService">
+        <wsdl:operation name="hitRoutes">
+            <wsdl:input message="tns:exposedCamelServiceRequest" name="exposedCamelServiceRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:exposedCamelServiceResponse" name="exposedCamelServiceResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="ExposedCamelServiceSoapBinding" type="tns:ExposedCamelService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="hitRoutes">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input name="exposedCamelServiceRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="exposedCamelServiceResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="ExposedServiceToUseCamelRoutes">
+        <wsdl:port binding="tns:ExposedCamelServiceSoapBinding" name="ExposedCamelServicePort">
+            <soap:address location="http://localhost:8181/cxf/ExposedCamelService" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

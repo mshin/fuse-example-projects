@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+    xmlns:jaxws="http://cxf.apache.org/jaxws"
+    xmlns:cxf="http://camel.apache.org/schema/cxf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+   	http://camel.apache.org/schema/spring
+	http://camel.apache.org/schema/spring/camel-spring.xsd
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd
+	http://camel.apache.org/schema/cxf 
+	http://camel.apache.org/schema/cxf/camel-cxf.xsd
+    http://www.springframework.org/schema/osgi-compendium
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+    
+	<!--
+		regular spring configuration file defining the beans for this bundle.
+		The configuration of OSGi definitions is kept in a separate
+		configuration file so that this file can easily be used for
+		integration testing outside of an OSGi environment
+	-->
+    <import resource="database-setup.xml" />
+    <import resource="ldap-setup.xml" />
+    <import resource="compendium.xml" />
+    
+    <import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<!-- 
+		The following commented out code is an alternate way of setting up the 
+		Camel route to start from a web service exposed by the Camel bundle. 
+		This method includes starting the Camel route from the context of the 
+		exposed web service ServiceImpl class. Comment in the Service Impl
+		ExposedCamelServiceImpl.java along with this code to turn it on.
+		Read all the relevant comments for important instructions as well.
+	 -->
+	<!-- 
+	<jaxws:endpoint id="exposedCamelServiceEndpoint" depends-on="camelContext"
+	    implementor="#exposedCamelServiceImpl"
+	    address="http://localhost:8181/cxf/ExposedCamelService"
+	    wsdlLocation="exposed_camel_webservice.wsdl"
+	    endpointName="e:ExposedCamelServicePort"
+	    serviceName="s:ExposedServiceToUseCamelRoutes"
+	    xmlns:e="http://exposed_camel_service_1_0.fuse.starter.kit/"
+        xmlns:s="http://exposed_camel_service_1_0.fuse.starter.kit/"/>
+        
+    <bean id="exposedCamelServiceImpl" class="kit.starter.fuse.exposed_camel_service_1_0.ExposedCamelServiceImpl">
+		<property name="camelContext" ref="camelContext"/>	
+		<property name="routeSourceEndpoint" value="direct:camelServiceSource"/>	
+	</bean>    
+	 -->
+	 
+	<!-- Remove this endpoint if using the ExposedCamelServiceImpl implementation. -->
+	<cxf:cxfEndpoint id="exposedCamelServiceEndpoint"
+		address="/ExposedCamelService"
+		wsdlURL="wsdl/exposed_camel_webservice.wsdl"
+		serviceClass="kit.starter.fuse.exposed_camel_service_1_0.ExposedCamelService"
+		endpointName="e:ExposedCamelServicePort"
+		serviceName="s:ExposedServiceToUseCamelRoutes"
+		xmlns:e="http://exposed_camel_service_1_0.fuse.starter.kit/"
+		xmlns:s="http://exposed_camel_service_1_0.fuse.starter.kit/" />
+
+	<cxf:cxfEndpoint id="backendWebserviceClientEndpoint"
+        serviceClass="kit.starter.fuse.backend_service_1_0.BackendService"
+        address="http://localhost:8181/cxf/BackendService" />
+            
+	<camelContext lazyLoadTypeConverters="true" id="camelContext" xmlns="http://camel.apache.org/schema/spring">
+		<routeBuilder ref="fuseStarterKitRouteBuilder" />
+	</camelContext>
+	
+	<!-- If implementing the ExposedCamelServiceImpl implementation, change the value of 
+	property routeSourceEndpoint to "direct:camelServiceSource". -->
+	<bean id="fuseStarterKitRouteBuilder" class="kit.starter.fuse.route.FuseStarterKitRouteBuilder">
+		<property name="routeSourceEndpoint" value="cxf:bean:exposedCamelServiceEndpoint"/>
+		<property name="dataSourceBeanId" value="postgres-ds"/>		
+	</bean>
+	    
+</beans>

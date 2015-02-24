@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+	Licensed to the Apache Software Foundation (ASF) under one
+	or more contributor license agreements. See the NOTICE file
+	distributed with this work for additional information
+	regarding copyright ownership. The ASF licenses this file
+	to you under the Apache License, Version 2.0 (the
+	"License"); you may not use this file except in compliance
+	with the License. You may obtain a copy of the License at
+
+	http://www.apache.org/licenses/LICENSE-2.0
+
+	Unless required by applicable law or agreed to in writing,
+	software distributed under the License is distributed on an
+	"AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+	KIND, either express or implied. See the License for the
+	specific language governing permissions and limitations
+	under the License.
+-->
+<wsdl:definitions name="BackendServiceSimulatingWebserviceCamelRouteEndpoint" 
+                  targetNamespace="http://backend_service_1_0.fuse.starter.kit/" 
+                  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+                  xmlns:tns="http://backend_service_1_0.fuse.starter.kit/" 
+                  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+                  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <wsdl:types>
+        <xsd:schema attributeFormDefault="unqualified" 
+                    elementFormDefault="unqualified" 
+                    targetNamespace="http://backend_service_1_0.fuse.starter.kit/" 
+                    xmlns:tns="http://backend_service_1_0.fuse.starter.kit/" 
+                    xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+            <xsd:element name="backendServiceRequest" type="tns:backendServiceRequest" />
+            <xsd:complexType name="backendServiceRequest">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="selectedValue" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="backendServiceResponse" type="tns:backendServiceResponse" />
+            <xsd:complexType name="backendServiceResponse">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" name="fromWS" type="xsd:string" />
+                </xsd:sequence>
+            </xsd:complexType>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="backendServiceResponse">
+        <wsdl:part element="tns:backendServiceResponse" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="backendServiceRequest">
+        <wsdl:part element="tns:backendServiceRequest" name="parameters">
+        </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="BackendService">
+        <wsdl:operation name="hitBackendWS">
+            <wsdl:input message="tns:backendServiceRequest" name="backendServiceRequest">
+            </wsdl:input>
+            <wsdl:output message="tns:backendServiceResponse" name="backendServiceResponse">
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="BackendServiceSoapBinding" type="tns:BackendService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="hitBackendWS">
+            <soap:operation soapAction="" style="document" />
+            <wsdl:input name="backendServiceRequest">
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output name="backendServiceResponse">
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="BackendServiceSimulatingWebserviceCamelRouteEndpoint">
+        <wsdl:port binding="tns:BackendServiceSoapBinding" name="BackendServicePort">
+            <soap:address location="http://localhost:8181/cxf/BackendService" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

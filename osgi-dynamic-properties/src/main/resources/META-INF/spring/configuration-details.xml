@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xmlns:ctx="http://www.springframework.org/schema/context"
+	xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd
+    http://www.springframework.org/schema/osgi-compendium
+    http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
+
+    <!-- hook the bean up to the dynamic properties file -->
+   	<bean id="osgiDynamicPropertiesBean" class="example.dynamicproperties.osgi.OsgiDynamicPropertiesBean">
+		<osgix:managed-properties persistent-id="dynamicPropertiesFile" update-strategy="bean-managed" update-method="updateCallback"/>
+	    <property name="dynamicPropertiesMap" ref="initialPropertiesMap" />
+	</bean>
+
+    <!-- create a default ConcurrentHashMap in context -->
+	<util:map id="initialPropertiesMap" map-class="java.util.concurrent.ConcurrentHashMap" />
+
+
+	<osgix:cm-properties id="dynamicPropertiesFile.cfg.with.defaults" persistent-id="dynamicPropertiesFile" />
+
+	<!-- placeholder configurer -->
+	<ctx:property-placeholder properties-ref="dynamicPropertiesFile.cfg.with.defaults" />
+	
+</beans>

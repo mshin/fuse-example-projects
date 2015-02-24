@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>kit.starter.fuse</groupId>
+    <artifactId>fsk-root</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+
+  <artifactId>fsk-esb</artifactId>
+  <packaging>bundle</packaging>
+  <name>fsk-esb</name>
+  
+  <properties>
+  </properties>
+  
+  <dependencies>
+  
+    <!-- Application dependencies -->
+   
+  <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>artifacts</artifactId>
+      <version>${project.version}</version>
+    </dependency> 
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring-version}</version>
+      </dependency>
+      <dependency>
+        <groupId>commons-dbcp</groupId>
+        <artifactId>commons-dbcp</artifactId>
+        <version>${commons-dbcp-version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework</groupId>
+        <artifactId>spring-jdbc</artifactId>
+        <version>${spring-version}</version>
+      </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>${postgres-version}</version>
+    </dependency>          
+    <!-- Module dependencies -->
+
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit-version}</version>
+      <scope>provided</scope>
+    </dependency> 
+        
+    <!-- Camel -->
+    
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-core</artifactId>
+      <version>${camel-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring</artifactId>
+      <version>${camel-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-cxf</artifactId>
+      <version>${camel-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-spring-ws</artifactId>
+      <version>${camel-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-jaxb</artifactId>
+      <version>${camel-version}</version>
+    </dependency>        
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-test</artifactId>
+      <version>${camel-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-test-spring</artifactId>
+      <version>${camel-version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.apache.xbean</groupId>
+        <artifactId>xbean-spring</artifactId>
+        <version>${xbean-spring-version}</version>
+        <exclusions>
+            <exclusion>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring</artifactId>
+            </exclusion>
+        </exclusions>
+        <scope>test</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>org.apache.camel</groupId>
+      <artifactId>camel-sql</artifactId>
+      <version>${camel-version}</version>
+    </dependency>
+    <!-- CXF -->
+    
+    <dependency>
+        <groupId>org.apache.cxf</groupId>
+        <artifactId>cxf-bundle</artifactId>
+        <version>${cxf-version}</version>
+	</dependency>
+	
+    <!-- SLF4J -->
+    
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>${slf4j-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+      <version>${slf4j-version}</version>
+    </dependency>
+    
+    <!-- Spring -->
+    
+    <dependency> 
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-beans</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+      <version>${spring-version}</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.ws</groupId>
+        <artifactId>spring-ws-core</artifactId>
+        <version>${spring-ws-core-version}</version>
+    </dependency>
+    
+    <!-- Spring LDAP -->
+    <dependency>
+        <groupId>org.springframework.ldap</groupId>
+        <artifactId>spring-ldap-core</artifactId>
+        <version>${spring-ldap-version}</version>
+    </dependency>
+        
+  </dependencies>
+
+  <build>
+    <defaultGoal>install</defaultGoal>
+    <plugins>
+      <plugin>	
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>${maven-bundle-plugin.version}</version>
+        <extensions>true</extensions>
+        <configuration>
+          <instructions>
+            <Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+            <Import-Package>
+            	*,
+                javax.jws,
+                javax.wsdl,
+                javax.xml.bind,
+                javax.xml.bind.annotation,
+                javax.xml.namespace,
+                javax.xml.transform,
+                javax.xml.ws,
+                META-INF.cxf,
+                org.apache.cxf.bus,
+                org.apache.cxf.bus.spring,
+                org.apache.cxf.bus.resource,
+                org.apache.cxf.configuration.spring,
+                org.apache.cxf.resource,
+            	org.apache.camel,  
+            	org.apache.camel.spi, 
+            	org.apache.camel.spring.spi, 
+            	org.springframework.jms.connection, 
+            	org.springframework.jmx.export, 
+            	org.springframework.jmx.export.annotation, 
+            	org.springframework.jmx.export.assembler, 
+            	org.springframework.jmx.export.naming, 
+            	org.springframework.transaction.support,
+                org.apache.camel.osgi,
+                org.apache.activemq.camel.component,
+                org.springframework.beans.factory.config,
+                org.springframework.context.support,
+                org.slf4j,
+                org.postgresql
+        	</Import-Package>
+        	<Export-Package>
+        	    kit.starter.fuse.exposed_camel_service_1_0
+        	</Export-Package>
+        	<Require-Bundle>org.apache.cxf.bundle</Require-Bundle>
+          </instructions>
+        </configuration>
+      </plugin>
+    </plugins>
+  </build>
+</project>

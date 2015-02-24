@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:ctx="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:osgi="http://www.springframework.org/schema/osgi"
+       xmlns:jaxws="http://cxf.apache.org/jaxws"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+           http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
+           http://cxf.apache.org/jaxws http://cxf.apache.org/schemas/jaxws.xsd">
+
+  <import resource="configuration-details.xml"/>
+  
+  <!-- <osgi:reference id="configurationAdmin"
+                  interface="org.osgi.service.cm.ConfigurationAdmin"/> -->
+
+  <mvc:annotation-driven />
+  
+  <ctx:component-scan base-package="kit.starter.fuse"/>
+  
+  <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+    <property name="prefix" value="/WEB-INF/jsp/" />
+    <property name="suffix" value=".jsp" />
+  </bean>
+
+  <mvc:resources location="/css/" mapping="/css/**"/>
+  <mvc:resources location="/js/" mapping="/js/**"/>
+
+  <jaxws:client id="exposedCamelWebserviceClient"
+      serviceClass="kit.starter.fuse.exposed_camel_service_1_0.ExposedCamelService"
+      address="http://localhost:8181/cxf/ExposedCamelService" />
+ 
+<!--    <jaxws:client id="backendWebserviceClientEndpoint"
+      serviceClass="kit.starter.fuse.backend_service_1_0.BackendService"
+      address="http://localhost:8181/cxf/BackendService" /> -->
+      
+</beans>
