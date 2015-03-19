@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.example.jpah</groupId>
+	<artifactId>jpah-root</artifactId>
+	<version>__PROJECT_VERSION__</version>
+	<packaging>pom</packaging>
+
+	<name>jpah-root :: ROOT</name>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<version.compiler.plugin>2.3.1</version.compiler.plugin>
+		<version.maven-bundle-plugin>2.3.4</version.maven-bundle-plugin>
+		<build-helper-maven-plugin.version>1.5</build-helper-maven-plugin.version>
+		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
+
+		<jboss.fuse.bom.version>6.1.0.redhat-379</jboss.fuse.bom.version>
+		<camel-version>2.12.0.redhat-610379</camel-version>
+		<cxf-version>2.7.0.redhat-610379</cxf-version>
+		<spring-version>3.2.8.RELEASE_1</spring-version>
+		<spring-osgi-version>1.2.1</spring-osgi-version>
+		<karaf-version>2.3.0.redhat-610379</karaf-version>
+		<jackson-version>1.9.12</jackson-version>
+		
+		<servicemix-features-version>4.5.0.redhat-610379</servicemix-features-version>
+		<hibernate.version>4.3.6.Final</hibernate.version><!-- 4.3.6.Final --><!-- 4.2.9.Final -->
+		<hibernate-jpa2.version>1.0.1.Final</hibernate-jpa2.version>
+	</properties>
+
+	<modules>
+		<module>jpah-features</module>
+		<module>jpah-camel</module>
+	</modules>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.jboss.fuse.bom</groupId>
+				<artifactId>jboss-fuse-parent</artifactId>
+				<version>${jboss.fuse.bom.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<!-- Compiler plugin enforces Java 1.7 compatibility and activates annotation 
+					processors -->
+				<plugin>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>${version.compiler.plugin}</version>
+					<configuration>
+						<source>1.7</source>
+						<target>1.7</target>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<repositories>
+		<repository>
+			<id>fusesource</id>
+			<name>FuseSource Release Repository</name>
+			<url>http://repo.fusesource.com/nexus/content/groups/public/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+	</repositories>
+
+	<pluginRepositories>
+		<pluginRepository>
+			<id>fusesource</id>
+			<name>FuseSource Release Repository</name>
+			<url>http://repo.fusesource.com/nexus/content/groups/public/</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</pluginRepository>
+	</pluginRepositories>
+</project>

@@ -1,0 +1,42 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:camel-cxf="http://camel.apache.org/schema/cxf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://camel.apache.org/schema/spring
+	http://camel.apache.org/schema/spring/camel-spring.xsd
+	http://camel.apache.org/schema/cxf
+	http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+	<import resource="persistence-context.xml" />
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<bean id="jsonProvider" class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider" />
+
+	<camel-cxf:rsServer id="rsService1" address="http://localhost:9001" serviceClass="com.example.jpah.rest.RESTService" >
+		<camel-cxf:providers>
+			<ref bean="jsonProvider" />
+		</camel-cxf:providers>
+	</camel-cxf:rsServer>
+
+	<camel:camelContext>
+		<camel:routeBuilder ref="camelRouteBuilder" />
+	</camel:camelContext>
+
+	<bean id="camelRouteBuilder" class="com.example.jpah.route.RESTRoute" >
+		<property name="processorBean" ref="processorBeanId" />
+	</bean>
+
+	<bean id="processorBeanId" class="com.example.jpah.processors.ProcessorBean" >
+		<property name="daoService" ref="daoServiceId" />
+	</bean>
+
+	<bean id="daoServiceId" class="com.example.jpah.dao.DaoService" >
+		<property name="userDao" ref="userDao" />
+	</bean>
+
+	<bean id="userDao" class="com.example.jpah.dao.UserDaoImpl" />
+
+</beans>

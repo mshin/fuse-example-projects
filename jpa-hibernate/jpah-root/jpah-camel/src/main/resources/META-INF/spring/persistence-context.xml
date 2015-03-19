@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context.xsd
+	http://www.springframework.org/schema/tx
+	http://www.springframework.org/schema/tx/spring-tx.xsd">
+ 
+	<!-- Enables @Transactional; transaction-manager defaults to transactionManager if not explicitly defined. -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+
+	<!-- Enables finding of @Component pseudo-subtype @Repository in given packages. -->
+	<context:component-scan base-package="com.example.jpah.dao" />
+
+	<!-- Enables @Repository -->
+	<bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+
+	<!-- Enables @PersistenceUnit/@PersistenceContext access to EntityManagerFactory/EntityManager -->
+	<!-- @Persistence* will not work unless bean is managed; bean management normally 
+	done through bean declaration in spring-context or through annotations (@Repository)-->
+	<bean class="org.springframework.orm.jpa.support.PersistenceAnnotationBeanPostProcessor" />
+
+	<bean id="postgres-ds" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="org.postgresql.Driver" /><!-- package import must be in manifest -->
+		<property name="url" value="jdbc:postgresql://localhost:5432/postgres" />
+		<property name="username" value="postgres" />
+		<property name="password" value="postgres" />
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+		<property name="jpaDialect" ref="jpaDialect" />
+		<!-- <property name="dataSource" ref="postgres-ds" /> -->
+	</bean>
+ 
+	<bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+	<!-- org.springframework.orm.jpa.LocalEntityManagerFactoryBean"> -->
+		<property name="persistenceUnitName" value="hibernate_with_postgres"/>
+		<property name="jpaVendorAdapter" ref="jpaHAdapter" />
+		<property name="dataSource" ref="postgres-ds" />
+		<property name="jpaDialect" ref="jpaDialect" />
+	</bean>
+
+	<bean id="jpaDialect" class="org.springframework.orm.jpa.vendor.HibernateJpaDialect" />
+
+	<bean id="jpaHAdapter" class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter" />
+
+	<!-- MySql DataSource Setup -->
+	<!-- bean id="mysql-ds" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+		<property name="driverClass" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/mysqldatabase?relaxAutoCommit=true" />
+		<property name="username" value="user" />
+		<property name="password" value="password" />
+	</bean -->
+
+	<!-- 	Use this instead if you want to put things other than persistence in the transaction.
+	<bean id="transactionManager" class="org.springframework.transaction.jta.JtaTransactionManager">
+		<property name="entityManagerFactory" ref="entityManagerFactory"/>
+	</bean> 
+	-->
+
+</beans>
