@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+
+	<feature name="cxfss-commons">
+		<feature version="${cxf-version}">cxf</feature>
+		<feature version="${spring-version}">spring</feature>
+	</feature>
+
+	<feature name="cxfss">
+		<feature>cxfss-commons</feature>
+		<bundle>mvn:${project.groupId}/cxfss-code-1st/${project.version}</bundle>
+		<bundle>mvn:${project.groupId}/cxfss-wsdl-1st/${project.version}</bundle>
+	</feature>
+
+</features>

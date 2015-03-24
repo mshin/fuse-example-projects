@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.example.cxfss</groupId>
+		<artifactId>cxfss-root</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<artifactId>cxfss-wsdl-1st</artifactId>
+	<packaging>bundle</packaging>
+	<name>cxfss-wsdl-1st :: Secure SOAP webservice code first</name>
+
+	<properties>
+		<wsdlLocation1>${basedir}/src/main/resources/wsdl/GetMyObjectService.wsdl</wsdlLocation1>
+		<cxf-version>2.7.14</cxf-version>
+		<wss4j.version>2.0.0</wss4j.version>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-bundle</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wss4j</groupId>
+			<artifactId>wss4j-ws-security-common</artifactId>
+			<version>${wss4j.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<!--Use this plugin for wsdl to Java.-->
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-codegen-plugin</artifactId>
+				<version>${cxf-version}</version>
+				<executions>
+					<execution>
+						<id>generate-test-sources</id>
+						<phase>generate-sources</phase>
+						<configuration>
+							<sourceRoot>${basedir}/target/generated/src/main/java</sourceRoot>
+							<wsdlOptions>
+								<wsdlOption>
+									<wsdl>${wsdlLocation1}</wsdl> 
+								</wsdlOption> 
+							</wsdlOptions>
+						</configuration>
+						<goals>
+							<goal>wsdl2java</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>	
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${version.maven-bundle-plugin}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Import-Package>
+								javax.jws,
+								javax.jws.soap,
+								javax.security.auth.callback,
+								javax.xml.bind,
+								javax.xml.bind.annotation,
+								javax.xml.namespace,
+								javax.xml.ws;version="[2.2,3)",
+								org.apache.ws.security;version="[1.6,2)"
+						</Import-Package>
+						<Export-Package>
+								com.example.cxfss.get_my_object_soap_ws_1_0
+						</Export-Package>
+						<Require-Bundle>org.apache.cxf.bundle</Require-Bundle>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

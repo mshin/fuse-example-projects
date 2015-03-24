@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" >
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.example.cxfss</groupId>
+		<artifactId>cxfss-root</artifactId>
+		<version>1.0</version>
+	</parent>
+
+	<artifactId>cxfss-code-1st</artifactId>
+	<packaging>bundle</packaging>
+	<name>cxfss-code-1st :: Secure SOAP webservice code first</name>
+
+	<properties>
+		<cxf-version>2.7.14</cxf-version>
+		<code-first.className>com.example.cxfss.get_my_object_soap_ws_1_0.GetMyObjectServiceJavaFirst</code-first.className>
+		<code-first.serviceName>GetMyObjectServiceJavaFirst</code-first.serviceName>
+		<code-first.address>http://localhost:8181/cxf/GetMyObjectServiceJavaFirst</code-first.address>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-bundle</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-api</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<!--Use this plugin for Java to wsdl.-->
+			<plugin>
+				<groupId>org.apache.cxf</groupId>
+				<artifactId>cxf-java2ws-plugin</artifactId>
+				<version>${cxf-version}</version>
+				<executions>
+					<execution>
+						<id>process-classes</id>
+						<phase>process-classes</phase>
+						<goals>
+							<goal>java2ws</goal>
+						</goals>
+						<configuration>
+							<className>${code-first.className}</className>
+							<genWsdl>true</genWsdl>
+							<attachWsdl>false</attachWsdl>
+							<genClient>false</genClient>
+							<serviceName>${code-first.serviceName}</serviceName>
+							<verbose>true</verbose>
+							<address>${code-first.address}</address>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
+			<plugin>	
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${version.maven-bundle-plugin}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Import-Package>
+							*
+						</Import-Package>
+						<Export-Package>
+							com.example.cxfss.get_my_object_soap_ws_1_0
+						</Export-Package>
+						<Require-Bundle>org.apache.cxf.bundle</Require-Bundle>
+					</instructions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

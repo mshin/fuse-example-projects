@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://cxf.apache.org/jaxws 
+	http://cxf.apache.org/schemas/jaxws.xsd">
+
+	<!--
+	When writing a CXF webservice without Camel, do not use the schema
+	xmlns:cxf="http://camel.apache.org/schema/cxf"	
+	http://camel.apache.org/schema/cxf 
+	http://camel.apache.org/schema/cxf/camel-cxf.xsd
+	to declare webservice endpoints because that namespace is specifically used for CXF webservices used as endpoints for Camel.
+	xmlns:jaxws="http://cxf.apache.org/jaxws" 
+	Is the schema used for declaring webservice endpoints that are not used by Camel.
+	
+	-->
+
+	<import resource="classpath:META-INF/cxf/cxf.xml" />
+
+	<jaxws:endpoint id="getMyObjectServiceEndpoint"
+		implementor="#getMyObjectServiceImpl"
+		address="/GetMyObjectService"
+		wsdlLocation="wsdl/GetMyObjectService.wsdl"
+		endpointName="e:GetMyObjectServicePort"
+		serviceName="s:GetMyObjectService"
+		xmlns:e="http://get_my_object_soap_ws_1_0.cxfss.example.com/"
+		xmlns:s="http://get_my_object_soap_ws_1_0.cxfss.example.com/">
+
+		<jaxws:properties> 
+			<entry key="ws-security.callback-handler" value-ref="passwordCallbackHandler"/> 
+		</jaxws:properties>
+	</jaxws:endpoint>
+
+	<bean id="passwordCallbackHandler" class="com.example.cxfss.get_my_object_soap_ws_1_0.PasswordCallbackHandler" />
+
+	<bean id="getMyObjectServiceImpl" class="com.example.cxfss.get_my_object_soap_ws_1_0.GetMyObjectServiceImpl"/>
+
+</beans>

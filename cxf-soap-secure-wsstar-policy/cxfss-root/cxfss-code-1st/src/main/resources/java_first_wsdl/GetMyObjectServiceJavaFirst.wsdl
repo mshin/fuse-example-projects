@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="GetMyObjectServiceJavaFirst" targetNamespace="http://get_my_object_soap_ws_1_0.cxfss.example.com/" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://get_my_object_soap_ws_1_0.cxfss.example.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:tns="http://get_my_object_soap_ws_1_0.cxfss.example.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="http://get_my_object_soap_ws_1_0.cxfss.example.com/">
+  <xs:element name="myObjectJavaFirst" type="tns:myObjectJavaFirst"/>
+  <xs:complexType name="myObjectJavaFirst">
+    <xs:sequence>
+      <xs:element name="map">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="entry">
+              <xs:complexType>
+                <xs:sequence>
+                  <xs:element minOccurs="0" name="key" type="xs:string"/>
+                  <xs:element minOccurs="0" name="value" type="xs:string"/>
+                </xs:sequence>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="key" nillable="true" type="xs:string"/>
+  <xs:element name="valueResponse" nillable="true" type="xs:string"/>
+  <xs:element name="MyObjectResponse" nillable="true" type="tns:myObjectJavaFirst"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getMyObjectValueResponse">
+    <wsdl:part name="valueResponse" element="tns:valueResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMyObjectValue">
+    <wsdl:part name="key" element="tns:key">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMyObjectResponse">
+    <wsdl:part name="MyObjectResponse" element="tns:MyObjectResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getMyObject">
+  </wsdl:message>
+  <wsdl:portType name="GetMyObjectServiceJavaFirst">
+    <wsdl:operation name="getMyObjectValue">
+      <wsdl:input name="getMyObjectValue" message="tns:getMyObjectValue">
+    </wsdl:input>
+      <wsdl:output name="getMyObjectValueResponse" message="tns:getMyObjectValueResponse">
+    </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMyObject">
+      <wsdl:input name="getMyObject" message="tns:getMyObject">
+    </wsdl:input>
+      <wsdl:output name="getMyObjectResponse" message="tns:getMyObjectResponse">
+    </wsdl:output>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="GetMyObjectServiceJavaFirstServiceSoapBinding" type="tns:GetMyObjectServiceJavaFirst">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getMyObjectValue">
+      <soap:operation soapAction="http://get_my_object_soap_ws_1_0.cxfss.example.com/getMyObjectValue" style="document"/>
+      <wsdl:input name="getMyObjectValue">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMyObjectValueResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getMyObject">
+      <soap:operation soapAction="http://get_my_object_soap_ws_1_0.cxfss.example.com/getMyObject" style="document"/>
+      <wsdl:input name="getMyObject">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMyObjectResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="GetMyObjectServiceJavaFirst">
+    <wsdl:port name="GetMyObjectServiceJavaFirstPort" binding="tns:GetMyObjectServiceJavaFirstServiceSoapBinding">
+      <soap:address location="http://localhost:8181/cxf/GetMyObjectServiceJavaFirst"/>
+    </wsdl:port>
+    <wsp:PolicyReference URI="#UserNamePolicy"/>
+  </wsdl:service>
+    <wsp:Policy wsu:Id="UserNamePolicy" xmlns:wsp="http://www.w3.org/ns/ws-policy" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd">
+  <wsp:ExactlyOne>
+    <wsp:All>
+      <sp:SupportingTokens xmlns:sp="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy">
+        <wsp:Policy>
+          <sp:UsernameToken sp:IncludeToken="http://schemas.xmlsoap.org/ws/2005/07/securitypolicy/IncludeToken/AlwaysToRecipient">
+            <wsp:Policy>
+              <sp:WssUsernameToken10/>
+            </wsp:Policy>
+          </sp:UsernameToken>
+        </wsp:Policy>
+      </sp:SupportingTokens>
+      <!-- /sp:SignedSupportingTokens -->
+    </wsp:All>
+  </wsp:ExactlyOne>
+</wsp:Policy>
+</wsdl:definitions>

@@ -1,0 +1,5 @@
+The code first wsdl is *here* for two different reasons:
+
+1. When the wsdl is created, it is installed to the target directory. The target directory is not (should not) be source controlled. We could install the generated wsdl to this directory if we wanted to but generated files should go into the target directory. We need the module to be able to find the wsdl at a path. Also, the wsdl needs to be part of the built bundle/jar for it to deploy correctly. Thus, the wsdl is copied manually from the target directory to this location.
+
+2. The wsdl is located in a directory named "java_first_wsdl" to distinguish it from the directory of the wsdl first wsdl. For some reason, when the wsdl first plugin runs, it finds and generates sources for ALL wsdls located in the directory containing the wsdl you list as the source for the plugin. Thus, if a module contained a code first soap ws and a wsdl first soap ws, then the wsdls should be located in differently named directories.
