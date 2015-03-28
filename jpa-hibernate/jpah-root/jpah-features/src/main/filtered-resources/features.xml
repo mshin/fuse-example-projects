@@ -2,7 +2,7 @@
 <features>
 
     <!-- LOAD THIS FIRST --> 
-    <feature name="jpah-commons" version="0__PROJECT_FEATURE_VERSION__" >
+    <feature name="jpah-commons">
         <feature version="${camel-version}">camel-core</feature>
         <feature version="${cxf-version}">cxf</feature>
         <feature version="${camel-version}">camel-cxf</feature>
@@ -43,7 +43,7 @@
 
     </feature>
 
-    <feature name="jpah" version="0__PROJECT_FEATURE_VERSION__" >
+    <feature name="jpah">
         <feature>jpah-commons</feature>
         <bundle>mvn:${project.groupId}/jpah-camel/${project.version}</bundle>
     </feature>

@@ -8,7 +8,7 @@
 	<parent>
 		<artifactId>jpah-root</artifactId>
 		<groupId>com.example.jpah</groupId>
-		<version>__PROJECT_VERSION__</version>
+		<version>1.0</version>
 	</parent>
 
 	<dependencies>

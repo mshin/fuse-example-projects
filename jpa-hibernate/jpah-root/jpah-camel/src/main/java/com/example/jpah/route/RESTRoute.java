@@ -10,13 +10,13 @@ import com.example.jpah.processors.ProcessorBean;
 public class RESTRoute extends RouteBuilder{
 
 	private static final String REST_SERVICE_1 = "cxfrs:bean:rsService1";
-	
+
 	private ProcessorBean processorBean;
-    
-    public void setProcessorBean(ProcessorBean processorBean) {
-    	this.processorBean = processorBean;
-    }
-	
+
+	public void setProcessorBean(ProcessorBean processorBean) {
+		this.processorBean = processorBean;
+	}
+
 	@Override
 	public void configure() throws Exception {
 		ValueBuilder operationHeader = header(CxfConstants.OPERATION_NAME);
@@ -26,7 +26,7 @@ public class RESTRoute extends RouteBuilder{
 		Predicate headerIsUpdate = operationHeader.isEqualTo("update");
 		Predicate headerIsDelete = operationHeader.isEqualTo("delete");
 		Predicate headerIsReadAll = operationHeader.isEqualTo("readAll");
-		
+
 		from(REST_SERVICE_1)
 			.id("CBR Route")
 			.choice()
@@ -42,10 +42,10 @@ public class RESTRoute extends RouteBuilder{
 					.bean(processorBean, "readAll")
 				.otherwise()
 					.to("direct:other");
-		
+
 		from("direct:other")
-		.id("CBR to Other")
-		.setBody(constant("Unrecognized request: " + operationHeader.toString()));
+			.id("CBR to Other")
+			.setBody(constant("Unrecognized request: " + operationHeader.toString()));
 	}
 
 }

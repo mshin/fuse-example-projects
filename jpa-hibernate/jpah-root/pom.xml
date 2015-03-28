@@ -6,7 +6,7 @@
 
 	<groupId>com.example.jpah</groupId>
 	<artifactId>jpah-root</artifactId>
-	<version>__PROJECT_VERSION__</version>
+	<version>1.0</version>
 	<packaging>pom</packaging>
 
 	<name>jpah-root :: ROOT</name>

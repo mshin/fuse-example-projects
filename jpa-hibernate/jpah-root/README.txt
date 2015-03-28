@@ -118,7 +118,7 @@ This must be done prior to creating the custom hibernate-core jar.
 2. Start the Fuse Karaf container and get into the Karaf command line. The console is by default on port 8101.
 3. Issue commands:
 
-features:addurl mvn:com.example.jpah/jpah-features/__PROJECT_VERSION__/xml/features
+features:addurl mvn:com.example.jpah/jpah-features/1.0/xml/features
 (This will make the "Feature Repository" you defined in your features.xml file to visible to the Karaf server)
 
 features:list | grep jpah
@@ -131,7 +131,7 @@ features:install jpah
 features:uninstall jpah jpah-commons
 (Unlike installing where dependencies can be loaded on the fly, to uninstall, all installed features must be explicitly uninstalled)
 
-features:removeurl mvn:com.example.jpah/jpah-features/__PROJECT_VERSION__/xml/features
+features:removeurl mvn:com.example.jpah/jpah-features/1.0/xml/features
 (This will make the features.xml no longer visible to Karaf. This step is only necessary if modifications have been made to the features.xml file in your project)
 
 5. Check localhost:8181/cxf to make sure your rest webservice is available.
