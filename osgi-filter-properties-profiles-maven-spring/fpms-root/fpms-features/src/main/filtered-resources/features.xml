@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+
+	<feature name="fpms-commons" version="1.0">
+		<feature version="${camel-version}">camel-core</feature>
+		<feature version="${cxf-version}">cxf</feature>
+		<feature version="${camel-version}">camel-cxf</feature>
+		<feature version="${spring-version}_1">spring</feature>
+		<feature version="${cxf-version}">cxf-jaxrs</feature>
+		<bundle>mvn:commons-dbcp/commons-dbcp/${commons-dbcp.version}</bundle>
+		<bundle>wrap:mvn:mysql/mysql-connector-java/${mysql-driver.version}</bundle>
+	</feature>
+
+	<feature name="fpms" version="1.0">
+		<feature>fpms-commons</feature>
+		<bundle>mvn:${project.groupId}/fpms-camel/${project.version}</bundle>
+	</feature>
+
+</features>

@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:camel="http://camel.apache.org/schema/spring"
+	xmlns:camel-cxf="http://camel.apache.org/schema/cxf"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://camel.apache.org/schema/spring
+	http://camel.apache.org/schema/spring/camel-spring.xsd
+	http://camel.apache.org/schema/cxf
+	http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+
+	<import resource="persistence-context.xml"/>
+
+	<!-- dynamically get the local host IP address. -->
+	<bean id="inetAddress" class="java.net.InetAddress" factory-method="getLocalHost"/>
+
+	<camel-cxf:rsServer id="myService"
+		address="http://#{inetAddress.hostName}:${rs_user_service_endpoint_port}"
+		serviceClass="com.example.fpms.rest.MyService">
+	</camel-cxf:rsServer>
+
+	<camel:camelContext id="camelContextId">
+		<camel:routeBuilder ref="route" />
+	</camel:camelContext>
+	
+	<bean id="route" class="com.example.fpms.route.MyRoute">
+		<property name="processorBean" ref="processorBean"></property>
+	</bean>
+
+	<bean id="processorBean" class="com.example.fpms.processor.ProcessorBean">
+		<property name="environment" value="${environment}" />
+		<property name="datasource" ref="datasource" />
+	</bean>
+
+	<bean id="property" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:META-INF/properties/datasource.properties</value>
+				<value>classpath:META-INF/properties/context.properties</value>
+			</list>
+		</property>
+		<property name="ignoreUnresolvablePlaceholders" value="false" />
+	</bean>
+
+</beans>

@@ -1,0 +1,133 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>fpms-camel</artifactId>
+	<name>fpms-camel :: Maven and Spring Filter Properties with Camel and CXF REST</name>
+	<packaging>bundle</packaging>
+
+	<parent>
+		<artifactId>fpms-root</artifactId>
+		<groupId>com.example.fpms</groupId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-spring</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-cxf</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.cxf</groupId>
+			<artifactId>cxf-bundle</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>${mysql-driver.version}</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+			<version>${commons-dbcp.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<includes>
+					<include>**/properties/*.properties</include>
+					<include>META-INF/persistence.xml</include>
+				</includes>
+			</resource>
+		</resources>
+		<filters>
+			<filter>src/main/filters/filter-values-local.properties</filter>
+		</filters>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>${maven-resources-plugin.version}</version>
+			</plugin>		 
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${version.maven-bundle-plugin}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Import-Package>
+							*,
+							com.mysql.jdbc
+						</Import-Package>
+						<Export-Package>
+							com.example.fpms.rest
+						</Export-Package>
+						<Require-Bundle>org.apache.cxf.bundle</Require-Bundle>
+						<Include-Resource>
+							{maven-resources},
+							META-INF/properties/context.properties=target/classes/META-INF/properties/context.properties,
+							META-INF/properties/datasource.properties=target/classes/META-INF/properties/datasource.properties,
+							META-INF/spring/=src/main/resources/META-INF/spring/
+						</Include-Resource>
+					</instructions>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<build>
+				<filters>
+					<filter>src/main/filters/filter-values-dev.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>qa</id>
+			<build>
+				<filters>
+					<filter>src/main/filters/filter-values-qa.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>int</id>
+			<build>
+				<filters>
+					<filter>src/main/filters/filter-values-int.properties</filter>
+				</filters>
+			</build>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<build>
+				<filters>
+					<filter>src/main/filters/filter-values-prod.properties</filter>
+				</filters>
+			</build>
+		</profile>
+	</profiles>
+</project>
