@@ -54,7 +54,7 @@
 				<filtering>true</filtering>
 				<includes>
 					<include>**/properties/*.properties</include>
-					<include>META-INF/persistence.xml</include>
+					<include>META-INF/*.xml</include>
 				</includes>
 			</resource>
 		</resources>
