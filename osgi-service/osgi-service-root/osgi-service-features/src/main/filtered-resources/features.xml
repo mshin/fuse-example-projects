@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features>
+
+	<feature name="osgi-service-blueprint" version="1.0">
+		<!--feature version="${camel-version}">camel-core</feature-->
+		<bundle>mvn:${project.groupId}/osgi-service-blueprint/${project.version}</bundle>
+	</feature>
+
+	<feature name="osgi-service-llapi" version="1.0">
+		<bundle>mvn:${project.groupId}/osgi-service-llapi/${project.version}</bundle>
+	</feature>
+
+	<feature name="osgi-service-use" version="1.0">
+		<bundle>mvn:${project.groupId}/osgi-service-use-blueprint/${project.version}</bundle>
+		<bundle>mvn:${project.groupId}/osgi-service-use-activator/${project.version}</bundle>
+	</feature>
+
+	<feature name="osgi-service-example" version="1.0">
+		<feature>osgi-service-llapi</feature>
+		<feature>osgi-service-blueprint</feature>
+		<feature>osgi-service-use</feature>
+	</feature>
+
+</features>
