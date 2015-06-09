@@ -10,15 +10,21 @@
 		<bundle>mvn:${project.groupId}/osgi-service-llapi/${project.version}</bundle>
 	</feature>
 
-	<feature name="osgi-service-use" version="1.0">
+	<feature name="osgi-service-use-blueprint" version="1.0">
 		<bundle>mvn:${project.groupId}/osgi-service-use-blueprint/${project.version}</bundle>
+	</feature>
+	
+	<feature name="osgi-service-use-activator" version="1.0">
 		<bundle>mvn:${project.groupId}/osgi-service-use-activator/${project.version}</bundle>
 	</feature>
 
-	<feature name="osgi-service-example" version="1.0">
+	<feature name="osgi-service-use-spring" version="1.0">
+		<bundle>mvn:${project.groupId}/osgi-service-use-spring/${project.version}</bundle>
+	</feature>
+
+	<feature name="osgi-services" version="1.0">
 		<feature>osgi-service-llapi</feature>
 		<feature>osgi-service-blueprint</feature>
-		<feature>osgi-service-use</feature>
 	</feature>
 
 </features>

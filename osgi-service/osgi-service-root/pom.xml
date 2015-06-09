@@ -34,6 +34,7 @@
 		<module>osgi-service-llapi</module>
 		<module>osgi-service-use-activator</module>
 		<module>osgi-service-use-blueprint</module>
+		<module>osgi-service-use-spring</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

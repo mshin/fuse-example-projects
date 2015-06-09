@@ -7,12 +7,14 @@ Install commands: (karaf console)
 
 features:addurl mvn:com.example.osgi.service/osgi-service-features/1.0/xml/features
 features:install osgi-service-blueprint osgi-service-llapi
-features:install osgi-service-use
+features:install osgi-service-use-spring
+features:install osgi-service-use-activator
+features:install osgi-service-use-blueprint
 
 
 Uninstall commands: (karaf console)
 
-features:uninstall osgi-service-use
+features:uninstall osgi-service-use-spring osgi-service-use-activator osgi-service-use-blueprint
 features:uninstall osgi-service-blueprint osgi-service-llapi
 features:removeurl mvn:com.example.osgi.service/osgi-service-features/1.0/xml/features
 
@@ -20,9 +22,7 @@ features:removeurl mvn:com.example.osgi.service/osgi-service-features/1.0/xml/fe
 Management commands: (karaf console)
 
 features:list | grep osgi-service
-
 osgi:list (or just list)
 osgi:bundle-services $BUNDLE_ID
-
 log:display
 
