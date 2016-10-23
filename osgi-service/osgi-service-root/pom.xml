@@ -18,35 +18,18 @@
 		<build-helper-maven-plugin.version>1.5</build-helper-maven-plugin.version>
 		<maven-resources-plugin.version>2.5</maven-resources-plugin.version>
 
-		<jboss.fuse.bom.version>6.1.0.redhat-379</jboss.fuse.bom.version>
-		<camel-version>2.12.0.redhat-610379</camel-version>
-		<cxf-version>2.7.0.redhat-610379</cxf-version>
 		<spring-version>3.2.8.RELEASE_1</spring-version>
-		<spring-osgi-version>1.2.1</spring-osgi-version>
 		<karaf-version>2.3.0.redhat-610379</karaf-version>
 		<jackson-version>1.9.12</jackson-version>
 
+		<felix.framework.version>4.4.1</felix.framework.version>
 	</properties>
 
 	<modules>
 		<module>osgi-service-features</module>
-		<module>osgi-service-blueprint</module>
-		<module>osgi-service-llapi</module>
-		<module>osgi-service-use-activator</module>
-		<module>osgi-service-use-blueprint</module>
-		<module>osgi-service-use-spring</module>
+		<module>consume-service</module>
+		<module>expose-service</module>
 	</modules>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>org.jboss.fuse.bom</groupId>
-				<artifactId>jboss-fuse-parent</artifactId>
-				<version>${jboss.fuse.bom.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 
 	<build>
 		<pluginManagement>

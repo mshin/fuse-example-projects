@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>osgi-service-use-spring</artifactId>
+	<name>osgi-service-use-spring :: Example of How to Use OSGi Services</name>
+	<packaging>bundle</packaging>
+
+	<parent>
+		<artifactId>consume-service</artifactId>
+		<groupId>com.example.osgi.service</groupId>
+		<version>1.0</version>
+	</parent>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.framework</artifactId>
+			<version>${felix.framework.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.mshin</groupId>
+			<artifactId>spring-osgi-service-adapter</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>osgi-service-blueprint</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>osgi-service-activator</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>osgi-service-spring</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+	</dependencies>
+
+	<build>
+		<defaultGoal>install</defaultGoal>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>${version.maven-bundle-plugin}</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<!-- There is a bug where this plugin thinks Spring needs com.example.osgi.service.llapi.impl 
+							package erronesously if imporing *. Thus, packages explicitly imported. -->
+						<Import-Package>
+							com.example.osgi.service.blueprint,
+							com.example.osgi.service.llapi,
+							com.example.osgi.service.spring,
+							com.github.mshin.sosa;version="[1.0,2)",
+							org.osgi.framework;version="[1.7,2)"
+						</Import-Package>
+					</instructions>
+				</configuration>
+			</plugin>
+
+		</plugins>
+	</build>
+
+</project>

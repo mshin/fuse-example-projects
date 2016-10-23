@@ -1,0 +1,57 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/util
+	http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- Exposing two OSGi services using a com.github.mshin.sosa.OsgiServiceRegistrator. -->
+	<bean id="osgiServiceRegistrator" class="com.github.mshin.sosa.OsgiServiceRegistrator"
+		init-method="init" destroy-method="destroy">
+		<property name="bundleClass">
+			<value type="java.lang.Class">com.example.osgi.service.spring.impl.ClassInOsgiServiceSpringBundle
+			</value>
+		</property>
+		<property name="osgiServiceDefinitionList">
+			<list>
+				<bean class="com.github.mshin.sosa.OsgiServiceDefinition">
+					<property name="classList">
+						<list>
+							<value>com.example.osgi.service.spring.MySpringOsgiService</value>
+						</list>
+					</property>
+					<property name="serviceInstance">
+						<bean class="com.example.osgi.service.spring.impl.MySpringOsgiServiceImpl" />
+					</property>
+					<property name="properties">
+						<map>
+							<entry key="property1" value="value1" />
+							<entry key="property2" value="value2" />
+						</map>
+					</property>
+				</bean>
+				<bean class="com.github.mshin.sosa.OsgiServiceDefinition">
+					<property name="classList">
+						<list>
+							<value>com.example.osgi.service.spring.MyNoInterfaceSpringOsgiService</value>
+						</list>
+					</property>
+					<property name="serviceInstance">
+						<bean class="com.example.osgi.service.spring.MyNoInterfaceSpringOsgiService" />
+					</property>
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<!-- If only exposing MyNoInterfaceSpringOsgiService, the following code would suffice. -->
+	<!-- Note that the bundleClass is inferred from the serviceInstance class. -->
+<!-- 	<bean id="osgiServiceRegistrator" class="com.github.mshin.sosa.OsgiServiceRegistrator"
+		init-method="init" destroy-method="destroy">
+		<property name="serviceInstance">
+			<bean class="com.example.osgi.service.spring.MyNoInterfaceSpringOsgiService" />
+		</property>
+	</bean> -->
+
+</beans>

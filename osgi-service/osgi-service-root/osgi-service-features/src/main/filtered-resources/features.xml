@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <features>
 
+	<feature name="spring-osgi-service-adapter" version="1.0">
+		<bundle>mvn:com.github.mshin/spring-osgi-service-adapter/1.0</bundle>
+	</feature>
+
 	<feature name="osgi-service-blueprint" version="1.0">
-		<!--feature version="${camel-version}">camel-core</feature-->
 		<bundle>mvn:${project.groupId}/osgi-service-blueprint/${project.version}</bundle>
 	</feature>
 
-	<feature name="osgi-service-llapi" version="1.0">
-		<bundle>mvn:${project.groupId}/osgi-service-llapi/${project.version}</bundle>
+	<feature name="osgi-service-activator" version="1.0">
+		<bundle>mvn:${project.groupId}/osgi-service-activator/${project.version}</bundle>
+	</feature>
+
+	<feature name="osgi-service-spring" version="1.0">
+		<feature>spring-osgi-service-adapter</feature>
+		<bundle>mvn:${project.groupId}/osgi-service-spring/${project.version}</bundle>
 	</feature>
 
 	<feature name="osgi-service-use-blueprint" version="1.0">
@@ -19,12 +27,21 @@
 	</feature>
 
 	<feature name="osgi-service-use-spring" version="1.0">
+		<feature>spring-osgi-service-adapter</feature>
 		<bundle>mvn:${project.groupId}/osgi-service-use-spring/${project.version}</bundle>
 	</feature>
 
 	<feature name="osgi-services" version="1.0">
-		<feature>osgi-service-llapi</feature>
+		<feature>osgi-service-activator</feature>
 		<feature>osgi-service-blueprint</feature>
+		<feature>osgi-service-spring</feature>
+	</feature>
+
+	<feature name="osgi-use-services" version="1.0">
+		<feature>osgi-services</feature>
+		<feature>osgi-service-use-activator</feature>
+		<feature>osgi-service-use-blueprint</feature>
+		<feature>osgi-service-use-spring</feature>
 	</feature>
 
 </features>

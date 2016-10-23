@@ -1,9 +1,9 @@
-The purpose of this example project is to show how to use OSGi services in Karaf using both blueprint and programmatically. It is assumed that bundles will always be created using the Maven and the maven-bundle-plugin.
+The purpose of this example project is to show how to use OSGi services in Karaf using blueprint, spring, and programmatically. It is assumed that bundles will always be created using Maven and the maven-bundle-plugin.
 
 osgi-service-blueprint
 Expose an OSGi service to be used by other bundles using blueprint.
 
-osgi-service-llapi
+osgi-service-activator
 Expose an OSGi service to be used by other bundles using the low level Java API.
 
 

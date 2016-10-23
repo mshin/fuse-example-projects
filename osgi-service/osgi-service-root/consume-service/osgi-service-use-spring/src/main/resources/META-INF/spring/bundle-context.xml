@@ -1,0 +1,45 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="cachingOsgiServiceGetter" class="com.github.mshin.sosa.CachingOsgiServiceGetter"
+		init-method="init" destroy-method="destroy">
+		<property name="bundleClass">
+			<value type="java.lang.Class">com.example.osgi.service.use.spring.UseServices
+			</value>
+		</property>
+		<property name="findOsgiServiceTimeout" value="10000" /><!-- default is 30000 (30 seconds) -->
+	</bean>
+
+	<bean id="myServiceBP" class="com.github.mshin.sosa.OsgiService" factory-method="getService">
+		<constructor-arg value="com.example.osgi.service.blueprint.MyServiceBP" />
+		<constructor-arg ref="cachingOsgiServiceGetter" />
+	</bean>
+
+	<bean id="myServiceLLAPI" class="com.github.mshin.sosa.OsgiService" factory-method="getService">
+		<constructor-arg value="com.example.osgi.service.llapi.MyServiceLLAPI" />
+		<constructor-arg ref="cachingOsgiServiceGetter" />
+	</bean>
+
+	<bean id="mySpringOsgiService" class="com.github.mshin.sosa.OsgiService" factory-method="getService">
+		<constructor-arg index="0"
+			value="com.example.osgi.service.spring.MySpringOsgiService" />
+		<constructor-arg index="1"
+			value="(&amp;(objectclass=com.example.osgi.service.spring.MySpringOsgiService)(property1=value1))" />
+		<constructor-arg index="2" ref="cachingOsgiServiceGetter" />
+	</bean>
+
+	<bean id="myNoInterfaceSpringOsgiService" class="com.github.mshin.sosa.OsgiService" factory-method="getService">
+		<constructor-arg value="com.example.osgi.service.spring.MyNoInterfaceSpringOsgiService" />
+		<constructor-arg ref="cachingOsgiServiceGetter" />
+	</bean>
+
+	<bean id="useServices" class="com.example.osgi.service.use.spring.UseServices" init-method="useServices">
+		<property name="myServiceBP" ref="myServiceBP" />
+		<property name="myServiceLLAPI" ref="myServiceLLAPI" />
+		<property name="mySpringOsgiService" ref="mySpringOsgiService" />
+		<property name="myNoInterfaceSpringOsgiService" ref="myNoInterfaceSpringOsgiService" />
+	</bean>
+
+</beans>
