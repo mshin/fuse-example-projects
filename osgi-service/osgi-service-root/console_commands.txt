@@ -6,16 +6,15 @@ mvn clean install
 Install commands: (karaf console)
 
 features:addurl mvn:com.example.osgi.service/osgi-service-features/1.0/xml/features
-features:install osgi-service-blueprint osgi-service-llapi
-features:install osgi-service-use-spring
-features:install osgi-service-use-activator
-features:install osgi-service-use-blueprint
+features:install osgi-services
+features:install osgi-use-services
 
 
 Uninstall commands: (karaf console)
 
 features:uninstall osgi-service-use-spring osgi-service-use-activator osgi-service-use-blueprint
-features:uninstall osgi-service-blueprint osgi-service-llapi
+features:uninstall osgi-service-blueprint osgi-service-activator osgi-service-spring
+features:uninstall spring-osgi-service-adapter
 features:removeurl mvn:com.example.osgi.service/osgi-service-features/1.0/xml/features
 
 
